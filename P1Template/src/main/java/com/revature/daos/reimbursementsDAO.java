@@ -12,43 +12,6 @@ import com.revature.utils.ConnectionUtil;
 
 public class reimbursementsDAO implements reimbursementsDAOInterface{
 
-	@Override
-	public editions getEditionById(int id) {
-	
-		
-		try(Connection conn = ConnectionUtil.getConnection()){
-			
-			String sql = "select * from editions where edition_id = ?;";
-			
-			PreparedStatement ps = conn.prepareStatement(sql);
-			
-			ps.setInt(1, id); //this means the first and only question mark
-			
-			//the data that is returned is a ResultSet - result set object holds our data
-			ResultSet rs = ps.executeQuery(); //executes query into our new result set
-			
-			//need to iterate through the ResultSet to fill a editions all args constructor
-			
-			while(rs.next()) {
-			editions edition = new editions (
-					rs.getInt("edition_id"),
-					rs.getString("edition_title"),
-					rs.getInt("edition_price")
-					);
-			rs.next();
-			return edition;
-			}
-
-			
-					
-		} catch (SQLException e) {
-			System.out.println("Get Edition failed . . . bummer :("); //tell the console it failed
-			e.printStackTrace(); //print an error log for debugs
-		}
-		
-		return null;
-	
-	}//end of select by id method
 
 	@Override
 	public boolean updateEditionPrice(String title, int price) {
@@ -124,23 +87,6 @@ public class reimbursementsDAO implements reimbursementsDAOInterface{
 
 	}
 
-	@Override
-	public reimbursements selectReimb(int x) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public reimbursements[] selectAllReimb() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void updateReimb(reimbursements x) {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 	@Override
@@ -186,8 +132,33 @@ public class reimbursementsDAO implements reimbursementsDAOInterface{
 	}
 
 	@Override
-	public void updateReimbursement(reimbursements x) {
-		// TODO Auto-generated method stub
+	public boolean updateReimbursement(reimbursements x) {
+		try(Connection conn = ConnectionUtil.getConnection()){
+			
+			//SQL String for our UPDATE command
+			String sql = "update reimbursements set reimb_amount = ? where reimb_id = ?;";
+			
+			//create our PreparedStatement to fill in the variables
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, x.getReimb_amount());
+			ps.setInt(2, x.getReimb_id());
+			
+			ps.executeUpdate();
+			
+			//tell the console the update was successfully 
+			System.out.println(x.getReimb_id() + " has been updated to " + x.getReimb_amount());
+			
+			//if it succeeds, return true
+			return true;
+		
+	} catch (SQLException e) {
+		System.out.println("FAILED TO UPDATE");
+		e.printStackTrace();
+	}
+		
+		return false; 
+
 		
 	}
 	

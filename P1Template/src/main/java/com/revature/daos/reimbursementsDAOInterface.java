@@ -9,7 +9,7 @@ public interface reimbursementsDAOInterface {
 	//my methods p much everything i need except the log ins
 	ArrayList<reimbursements> getReimbursements();
 	public reimbursements selectReimbursement(int x); //not all, just one by satus_id
-	public void updateReimbursement (reimbursements x);
+	public boolean updateReimbursement (reimbursements x);
 	boolean insertReimb(reimbursements x);
 
 	
