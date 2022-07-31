@@ -1,13 +1,18 @@
 package com.revature.daos;
 
+import java.util.ArrayList;
 
+import com.revature.models.reimbursements;
 
 public interface reimbursementsDAOInterface {
-		//a method that returns a Role object from the database given the Role's ID
-		editions getEditionById(int id);
 		
-		//a method that updates the salary data for a given role
-		boolean updateEditionPrice(String title, int price);
+	//my methods p much everything i need except the log ins
+	public boolean insertReimbursements (reimbursements x);
+	ArrayList<reimbursements> getReimbursements();
+	public reimbursements selectReimbursement(int x); //not all, just one by satus_id
+	public void updateReimbursement (reimbursements x);
+
+	
 	}
-		//ctrl + shift + o to import unimported Classes 
+		
 
