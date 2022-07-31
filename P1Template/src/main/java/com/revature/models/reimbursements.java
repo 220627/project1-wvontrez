@@ -68,7 +68,7 @@ public class reimbursements {
 
 
 
-	public int getReimb_amount() {
+	public  int getReimb_amount() {
 		return reimb_amount;
 	}
 
@@ -84,7 +84,7 @@ public class reimbursements {
 
 
 
-	public Timestamp getReimb_submitted() {
+	public  Timestamp getReimb_submitted() {
 		return reimb_submitted;
 	}
 
@@ -100,7 +100,7 @@ public class reimbursements {
 
 
 
-	public String getReimb_description() {
+	public  String getReimb_description() {
 		return reimb_description;
 	}
 
@@ -116,7 +116,7 @@ public class reimbursements {
 
 
 
-	public int getReimb_status_fk() {
+	public  int getReimb_status_fk() {
 		return reimb_status_fk;
 	}
 
@@ -132,7 +132,7 @@ public class reimbursements {
 
 
 
-	public int getReimb_author_fk() {
+	public  int getReimb_author_fk() {
 		return reimb_author_fk;
 	}
 
