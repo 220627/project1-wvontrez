@@ -1,12 +1,16 @@
 package com.revature.daos;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import com.revature.models.editions;
+import com.revature.models.employees;
 import com.revature.models.reimbursements;
 import com.revature.utils.ConnectionUtil;
 
@@ -91,8 +95,40 @@ public class reimbursementsDAO implements reimbursementsDAOInterface{
 
 	@Override
 	public ArrayList<reimbursements> getReimbursements() {
-		// TODO Auto-generated method stub
-		return null;
+	
+            ArrayList<reimbursements> results = new ArrayList<>();
+            reimbursements temp = null;
+
+            try (Connection conn = DriverManager.getConnection(url, username, confirmation)) {
+
+                String sql = "SELECT ers_users.user_first_name, ers_users.user_last_name, ers_users.ers_username, *\n" +
+                        "FROM ers_reimbursement\n" +
+                        "INNER JOIN ers_users ON ers_users.ers_users_id = ers_reimbursement.reimb_author";
+
+                PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+
+                ResultSet rs = ps.executeQuery(); // executeQUERY not executeUpdate
+
+
+                while(rs.next()){
+                    temp = new Reimbursement(rs.getInt("reimb_id"),
+                            rs.getDouble("reimb_amount"),
+                            rs.getDate("reimb_submitted").toString(),
+                            rs.getString("reimb_resolved"),
+                            rs.getInt("reimb_author"),
+                            rs.getString("user_first_name") + " " + rs.getString("user_last_name"),
+                            rs.getString("ers_username"),
+                            rs.getInt("reimb_status_id"),
+                            rs.getInt("reimb_type_id")
+        );
+
+        results.add(temp);
+    }
+} catch (SQLException e) {
+    e.printStackTrace();
+}
+return results;
 	}
 
 	@Override
